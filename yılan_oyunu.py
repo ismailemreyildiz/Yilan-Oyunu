@@ -11,6 +11,8 @@ saat = pygame.time.Clock()
 
 # RENKLER
 beyaz = (255, 255, 255)
+yesil = (20, 250, 120)
+kirmizi = (220, 0, 20)
 siyah = (0, 0, 0)
 
 # YILAN
@@ -59,6 +61,10 @@ while oyun:
     if yilan_x >= genislik or yilan_x <= 0 or yilan_y >= yukseklik or yilan_y <= 0:
         oyun = False
     
+    for segment in yilan_liste[:-1]:
+        if segment == (yilan_x, yilan_y):
+            oyun = False
+        
     yilan_liste.append((yilan_x, yilan_y))
     
     if len(yilan_liste) > yilan_uzunluk:
@@ -71,13 +77,13 @@ while oyun:
         yilan_uzunluk += 1
         skor += 1
     
+    # EKRANA BASMA
     skor_yazisi = font.render("Skor: {}".format(skor), True, beyaz)
-    
-    pygame.draw.rect(pencere, beyaz, [yem_x, yem_y, yilan_boyu, yilan_boyu])
+    pygame.draw.rect(pencere, kirmizi, [yem_x, yem_y, yilan_boyu, yilan_boyu])
     for i in yilan_liste:
-        pygame.draw.rect(pencere, beyaz, [i[0], i[1], yilan_boyu, yilan_boyu])
+        pygame.draw.rect(pencere, yesil, [i[0], i[1], yilan_boyu, yilan_boyu])
     pencere.blit(skor_yazisi, (25, 25))
-    pygame.draw.rect(pencere, beyaz, [yilan_x, yilan_y, yilan_boyu, yilan_boyu])
+    pygame.draw.rect(pencere, yesil, [yilan_x, yilan_y, yilan_boyu, yilan_boyu])
     pygame.display.update()
     saat.tick(yilan_hiz)
 pygame.quit()
